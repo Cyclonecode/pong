@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
     fclose(fp);
 
     // Create socket.
-    if ((s = socket(SOL_SOCKET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
+    if ((s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
        error = errno;
        perror("Error creating socket");
        exit(error);
