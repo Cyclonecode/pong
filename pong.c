@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <unistd.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -69,6 +70,7 @@ void sigHandler(int sig) {
 int main(int argc, char** argv) {
     int c, s, port;
     FILE* fp;
+    int error;
     time_t date;
     struct tm* tm_info;
     char buffer[BUF_SIZE];
@@ -81,17 +83,22 @@ int main(int argc, char** argv) {
     int enable = 1;
     int one = 1;
     int sts = 0;
+    int fs = 0;
+    char* banner = 0;
 
     // Parse arguments.
     if (argc < 2) {
+        perror("Syntax: pong <port>\n");
+        exit(1);
     }
     port = atoi(argv[1]);
 
     // Load quotes.
-    if ((fp = fopen("/home/krister/pong/quotes.txt", "r")) == 0) {
+    if ((fp = fopen("./quotes.txt", "r")) == 0) {
         perror("Failed to open file.\n");
         exit(1);
     }
+
     // Initialize stack.
     stack.lines = 0; // (char**) malloc(sizeof(char*));
     stack.count = 0;
@@ -105,26 +112,24 @@ int main(int argc, char** argv) {
         stack.count++;
     }
     fclose(fp);
-/*    for (int i = 0; i < stack.count; i++) {
-      printf("string %d:%s\n", i, stack.lines[i]);
-    }
-    exit(0);
-*/
 
     // Create socket.
-    if ((s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
-        perror("Error creating socket.\n");
-        exit(1);
+    if ((s = socket(SOL_SOCKET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
+       error = errno;
+       perror("Error creating socket");
+       exit(error);
     }
     // Reuse address in waiting state.
     if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0) {
-        perror("Failed to reuse address.");
-        exit(1);
+        error = errno;
+        perror("Failed to reuse address");
+        exit(error);
     }
     // Set non-blocking mode for socket.
     if (ioctl(s, FIONBIO, (char *)&one) < 0) {
-        perror("Failed to set socket in non-blocking mode.\n");
-        exit(1);
+        error = errno;
+        perror("Failed to set socket in non-blocking mode");
+        exit(error);
     }
     // Setup address.
     saddr.sin_family = AF_INET;
@@ -132,13 +137,15 @@ int main(int argc, char** argv) {
     saddr.sin_port = htons(port);
     // Bind socket to specific address.
     if (bind(s, (struct sockaddr*)&saddr, sizeof(saddr)) != 0) {
-        perror("Error binding to address.\n");
-        exit(2);
+        error = errno;
+        perror("Error binding to address");
+        exit(error);
     }
     // Set socket in listening state.
     if (listen(s, 10) != 0) {
-        perror("Error listening on socket.\n");
-        exit(3);
+        error = errno;
+        perror("Error listening on socket");
+        exit(error);
     }
     memset(&client_addr, 0, sizeof(client_addr));
     addr_len = sizeof(client_addr);
@@ -147,14 +154,15 @@ int main(int argc, char** argv) {
     srand(0);
 
     // Read in our banner.
-    FILE* fin = fopen("/home/krister/pong/banner", "r");
-    fseek(fin, 0, SEEK_END);
-    int fs = ftell(fin);
-    fseek(fin, 0, SEEK_SET);
-    char* banner = malloc(fs + 1);
-    fread(banner, fs, 1, fin);
-    fclose(fin);
-//    free(banner);
+    FILE* fin = fopen("./banner", "r");
+    if (fin) {
+        fseek(fin, 0, SEEK_END);
+        fs = ftell(fin);
+        fseek(fin, 0, SEEK_SET);
+        banner = malloc(fs + 1);
+        fread(banner, fs, 1, fin);
+        fclose(fin);
+    }
 
     printf("===========================================\n");
     printf("Start waiting for clients\n");
