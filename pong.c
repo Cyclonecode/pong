@@ -16,13 +16,12 @@
 
 #define BUF_SIZE 1024
 #define LINE_SIZE 1024
-#define SERVER_PORT 1033
 
 struct stack_t {
     char** lines;
     int count;
 };
-
+// @todo insert non-volatile variable
 static volatile int running = 1;
 
 void dump(struct stack_t* stack) {
@@ -75,7 +74,6 @@ int main(int argc, char** argv) {
     struct tm* tm_info;
     char buffer[BUF_SIZE];
     char** quotes = 0;
-    char* message = "Hello sucker\n";
     char line[LINE_SIZE] = {0};
     struct sockaddr_in saddr, client_addr;
     struct stack_t stack;
@@ -100,7 +98,7 @@ int main(int argc, char** argv) {
     }
 
     // Initialize stack.
-    stack.lines = 0; // (char**) malloc(sizeof(char*));
+    stack.lines = 0;
     stack.count = 0;
     while (fgets(line, LINE_SIZE, (FILE*) fp) != 0)  {
         line[strlen(line) - 1] = 0;
@@ -185,15 +183,16 @@ int main(int argc, char** argv) {
             // Just read maximum BUF_SIZE from client.
             recv(c, buffer, BUF_SIZE, 0);
 
+            // First send the banner.
             send(c, banner, fs, 0);
 
+            // Finally send a random quote to the client.
             int r = rand() % (stack.count - 1);
             fprintf(fd, "I have a question for you: %s?\n", stack.lines[r]);
             fflush(fd);
             fclose(fd);
-            //send(c, stack.lines[r], strlen(stack.lines[r]), 0);
-            //send(c, "\n", 1, 0);
 
+            // Close client socket.
             close(c);
         }
         usleep(250);
