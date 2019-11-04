@@ -67,8 +67,9 @@ void sigHandler(int sig) {
 }
 
 int main(int argc, char** argv) {
-    int c, s, port;
+    int c, s, port, r;
     FILE* fp;
+    FILE* fd;
     int error;
     time_t date;
     struct tm* tm_info;
@@ -80,7 +81,6 @@ int main(int argc, char** argv) {
     socklen_t addr_len;
     int enable = 1;
     int one = 1;
-    int sts = 0;
     int fs = 0;
     char* banner = 0;
 
@@ -171,14 +171,15 @@ int main(int argc, char** argv) {
     while (running) {
         c = accept(s, (struct sockaddr*)&client_addr, &addr_len);
         if (c > 0) {
-            FILE* fd = fdopen(c, "r+");
+            fd = fdopen(c, "r+");
             time(&date);
             tm_info = localtime(&date);
             strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
-            printf(" - %s connected\n%s", inet_ntoa(client_addr.sin_addr), buffer);
 
             // Log client connection.
             dolog("%s - %s\n", buffer, inet_ntoa(client_addr.sin_addr));
+
+            printf("%s - %s\n", buffer, inet_ntoa(client_addr.sin_addr));
 
             // Just read maximum BUF_SIZE from client.
             recv(c, buffer, BUF_SIZE, 0);
@@ -187,7 +188,7 @@ int main(int argc, char** argv) {
             send(c, banner, fs, 0);
 
             // Finally send a random quote to the client.
-            int r = rand() % (stack.count - 1);
+            r = rand() % (stack.count - 1);
             fprintf(fd, "I have a question for you: %s?\n", stack.lines[r]);
             fflush(fd);
             fclose(fd);
