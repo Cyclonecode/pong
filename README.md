@@ -7,6 +7,10 @@ Nothing special is need to compile the binary:
 
     cc -o pong pong.c
 
+You can also use make to compile:
+
+    make
+
 ## Running
 
 Depending on which port you are using you might need to run the program with sudo privileges.
