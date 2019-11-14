@@ -21,106 +21,91 @@ You should then be able to connect and get a quote:
 
     curl 127.0.0.1:3000
 
-Notice that the program assumes that their is a `banner` and `quotes.txt` filee, the contents of these files is not really important.
+Notice that the program assumes that their is a `banner` and `quotes.txt` filee, the contents of these files is not really important; each line in `quotes.txt` becomes a random response from the server, while the contents of the `banner` is sent as it is.
 
 ## Example output
 
-    $> curl 127.0.0.1:3000
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyy
-    yyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyy
-    yyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyy
-    yyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyy
-    yyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyy
-    yyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyy
-    yyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyy
-    yyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyy
-    yyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyy
-    yyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyy
-    yyyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyy
-    yyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyy
-    yyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyy
-    yyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyy
-    yyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyy
-    yyyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyy
-    yyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyy
-    yyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyy
-    yyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyy
-    yyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyy
-    yyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyy
-    yyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyy
-    yyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyy
-    yyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyy
-    yyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyy
-    yyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyy
-    yyyyyyyyyyyxxxxxxxxxxxxyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyxxxxxyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyy
-    yyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyxxxxxxxyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyy
-    yyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyy
-    yyyyyyyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxxyyxxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxyyyyxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyxxxxxxxxyyyyyyxxxxxxxyyyyyyyyyyyyyyxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyxxxxxxyyyyyyyyxxxxxyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+<pre style="font-family:monospace;">
+$> curl 127.0.0.1:3000
+                                                        ..,***//((#%@@@@@@@@@@@@@@@%##(//***,...
+                                                      .,*//(%%%%  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   %%%((/*,..
+                                              .,**(#%% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  %#(**,.
+                                           ..,/#%% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ %%#/,..
+                                      ..,(%  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  %(,..
+                                     ,//# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//,
+                                 ,,/% @@@@@@@@@@@@@@@@@@@@@@@@   %%##(//****,,,,.......,,,,****//((#%%   @@@@@@@@@@@@@@@@@@@@@@@@ %/,,
+                              ./%@@@@@@@@@@@@@@@@@@@@@  %((/*,..                                        .,*//(%   @@@@@@@@@@@@@@@@@@@@%/.
+                            ,,(%@@@@@@@@@@@@@@@@@@@ %%(/*..                                                  .*/((% @@@@@@@@@@@@@@@@@@@%(,,
+                          *#  @@@@@@@@@@@@@@@@//,.                                                               .,//# @@@@@@@@@@@@@@@@ *
+                         *# @@@@@@@@@@@@@@@ /,..                                                                   ..,/#  @@@@@@@@@@@@@@@*
+                      ,## @@@@@@@@@@@@@@*..                                                                             ..*# @@@@@@@@@@@@@@#,
+                    ./%@@@@@@@@@@@@@@%//.                                                                                     .//%@@@@@@@@@@@@@@%/.
+                  ..*%@@@@@@@@@@@@@ %*..                                                                                       ..*% @@@@@@@@@@@@@%*..
+                 .(( @@@@@@@@@@@#,                                                                                               ,## @@@@@@@@@@@ ((.
+                 *%%@@@@@@@@@@@@%**                                                                                                 **%@@@@@@@@@@@@%%*
+               ./ @@@@@@@@@@@@%/.                                                                                                     ./%@@@@@@@@@@@@ /.
+              ./ @@@@@@@@@@@##,                                                                                                         ,##@@@@@@@@@@@ /..
+              ,# @@@@@@@@@@%**                                                                                                           **%@@@@@@@@@@,,
+            ..( @@@@@@@@@@%*                                                                                                               *%@@@@@@@@@@ ((.
+            **%@@@@@@@@@@ (.                                                                                                               .( @@@@@@@@@@%%*
+           .(( @@@@@@@@  (.                                                                                                                 .(  @@@@@@@@  (.
+           *%%@@@@@@@@@##,                                                                                                                   ,##@@@@@@@@@@%*
+          ./  @@@@@@@@ ((.                                                                                                                   .(( @@@@@@@@@ /.
+          ,%@@@@@@@@@@%,,                                                                                                                     ,,%@@@@@@@@@@%,
+          *%@@@@@@@@@ (..                                                                                                                     ..( @@@@@@@@@%*
+        ../ @@@@@@@@@%/                                                                                                                         /%@@@@@@@@@ /..
+        ..( @@@@@@@@@%*                                                                                                                         *%@@@@@@@@@ (..
+        ..#@@@@@@@@@@%,                                                                                                                         ,%@@@@@@@@@@#..
+        ,,%@@@@@@@@@@#.                                                                                                                         .#@@@@@@@@@@%,,
+        **%@@@@@@@@@@#.                                                                                                                         .#@@@@@@@@@@%**
+        **%@@@@@@@@@@#.                                                                                                                         .#@@@@@@@@@@%**
+        ,,%@@@@@@@@@@#.                                                                                                                         .#@@@@@@@@@@%,,
+        ,,#@@@@@@@@@@#.                                                                                                                         .#@@@@@@@@@@#,,
+        ..#@@@@@@@@@@%,                                                                                                                         ,%@@@@@@@@@@#..
+        ..( @@@@@@@@@%*                                                                                                                         *%@@@@@@@@@ (..
+        ../ @@@@@@@@@%/                                 .........                                       ......                                  /%@@@@@@@@@ /..
+          *%@@@@@@@@@ (..                         .,((#%   @@@   %#((,.                         .**(#%        %%((*,                          ..( @@@@@@@@@%*
+          ,%@@@@@@@@@@#,,                       ../#  @@@@@@@@@@@@@ /.                       ,(%% @@@@@@@@@@@@  %(*..                       ,,#@@@@@@@@@@%,
+          .(  @@@@@@@@ //......               ./%%@@@@@@@@@@@@@@@@@@@@@%//.                 ,,( @@@@@@@@@@@@@@@@@@@@@%%/.               ......// @@@@@@@@@ (.
+           /  @@@@@@@@#((#((/,.            ./%@@@@@@@@@@@@@@@@@@@@@@@@%%*                .//%@@@@@@@@@@@@@@@@@@@@@@@@%*             .,/((#((## @@@@@@@@@ /
+           ,##@@@@@@@@@@@@@@@@@@#,,        ../ @@@@@@@@@@@@@@@@@@@@@@@@@@@%*              ./  @@@@@@@@@@@@@@@@@@@@@@@@@@ /..        ,,#@@@@@@@@@@@@@@@@@@@#,
+            // @@@@@@@@@@@@@@@@@ //.       **%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%,             *%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%**       .// @@@@@@@@@@@@@@@@@  /
+            ,,%@@@@@@@@@@@@@@@@@ //.      .(( @@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*             *%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ((.      .// @@@@@@@@@@@@@@@@@%%,
+              *%@@@@@@@@@@@@@@@@%**       *%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ /..          ./ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%*       **%@@@@@@@@@@@@@@@@%**
+              ,#@@@@@@@@@@@@@@@@%,,       /  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ /..          ./ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  /       ,,#@@@@@@@@@@@@@@@@#,,
+               *%@@@@@@@@@@@@@@ /..      .(  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ /..          ./ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#.        / @@@@@@@@@@@@@@%*
+               .( @@@@@@@@@@@@@%*        ,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ /             / @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%,        *%@@@@@@@@@@@@@ (.
+                .(  @@@@@@@@@@@%,        ,%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,             ,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*        .( @@@@@@@@@@  (.
+                 .(( @@@@@@@@@ /.        .#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*               *%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%,         / @@@@@@@@@ ((.
+                 .// @@@@@@@@@ /         .(  @@@@@@@@@@@@@@@@@@@@@@@@@@@  (.               .(( @@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,         *%@@@@@@@@@ //.
+                 .// @@@@@@@@@%*          ,%%@@@@@@@@@@@@@@@@@@@@@@@@@@%//.                 ../%@@@@@@@@@@@@@@@@@@@@@@@@@@%%*          *%@@@@@@@@@ ((.
+                 .// @@@@@@@@@%*          .(( @@@@@@@@@@@@@@@@@@@@@@@@%(..                    .(%@@@@@@@@@@@@@@@@@@@@@@@@#,          *%@@@@@@@@@ ((.
+                 .// @@@@@@@@@ /.          ..*%@@@@@@@@@@@@@@@@@@@ %%/,          .,,,.          ,//% @@@@@@@@@@@@@@@@@@@%/..           / @@@@@@@@@ //.
+                  **%@@@@@@@@@@%*              ,//(%%%%     %%%%(*,            ,(%@@@%/..           ,*((%%%     %%%%(//,.             *%@@@@@@@@@@%**
+                  ,,#@@@@@@@@@@,,               .,***//////*,,.            ..(%@@@@@%//.            ..,*//////***,.               ,,# @@@@@@@@@@%,,
+                    *%@@@@@@@@@@@  (*.                                     ./%%@@@@@@@@@@%*                                      .*(  @@@@@@@@@@@%*
+                    ,# @@@@@@@@@@@@ %(**.                                  ,#@@@@@@@@@@@@ (,                                  .**(% @@@@@@@@@@@@,
+                     .(  @@@@@@@@@@@@@@@ %(**.                            *%@@@@@@@@@@@@@@@%**                           .**(% @@@@@@@@@@@@@@@  (.
+                      .**%@@@@@@@@@@@@@@@@@@@*..                      **%@@@@@@@@@@@@@@@@@%%*                      ..*# @@@@@@@@@@@@@@@@@@@%**.
+                       ../%@@@@@@@@@@@@@@@@@@@@%**.                    .(( @@@@@@@@@@@@@@@@@  (.                    .**%@@@@@@@@@@@@@@@@@@@@%/..
+                          .*((% @@@@@@@@@@@@@@@@  (.                  .(  @@@@@@@@@@@@@@@@@@@@ /.                  .(  @@@@@@@@@@@@@@@@ %((*.
+                            ..*#%  @@@@@@@@@@@@@@@%*                  ,#@@@@@@@@@@@@@@@@@@@@@@@#,                  *%@@@@@@@@@@@@@@@  %#*..
+                                 ,,*(%@@@@@@@@@@@@@#,,               ./ @@@@@@@@@## @@@@@@@@@ /..               ,#@@@@@@@@@@@@@%(*,,
+                                      **#@@@@@@@@@@%**               .(@@@@@@@@@@%**,( @@@@@@@@@(..               *%@@@@@@@@@@#**
+                                      ../ @@@@@@@@@%**               .( @@@@@@@@ (.. *%@@@@@@@@ (..               *%@@@@@@@@@ /..
+                                        *%@@@@@@@@@ //.               ,#  @@@  %*.    ,(( @@@@,               ../ @@@@@@@@@%*
+                                        *%@@@@@@@@@#,               .*((%%%##*.      ,,(%%%%(*.               ,,# @@@@@@@@@%*
+                                        ,#@@@@@@@@@@@@#,                                                       ,##@@@@@@@@@@@#,
+                                         *%@@@@@@@@@@@@%(,,                                                  ,(%@@@@@@@@@@@@%*
+                                         .(  @@@@@@@@@@@#*.                                             .**# @@@@@@@@@@@  (.
+                                          .(( @@@@@@@@@@@@@@%#//,.                                   .,,/#%@@@@@@@@@@@@@@ ((.
+                                           ,,#@@@@@@@@@@@@@@@ %%#/*..                              .*/##% @@@@@@@@@@@@@@@#,,
+                                             .*%@@@@@@@@@@@@@@@@@@@   %#((/****,,.....,,,***//(#%   @@@@@@@@@@@@@@@@@@@%*.
+                                               .**# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@**.
+                                                ..*(%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%(*..
+                                                    ..,(%  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ %(,,.
+                                                       .*((% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ %%(*.
+                                                            .,**(#%   @@@@@@@@@@@@@@@@@@@@@@@@@@@   %#((*,.`
 
-    I have a question for you: Who is Ice-T?
+I have a question for you: Who is Ice-T?
+</pre>
