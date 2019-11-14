@@ -1,6 +1,5 @@
 pong : pong.c
-	${CC} -o $@ ${CCFLAGS} pong.c
+	${CC} -o $@ ${CCFLAGS} $?
 
 clean : pong
-	unlink pong
-
+	unlink $?
