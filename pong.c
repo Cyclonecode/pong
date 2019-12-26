@@ -82,8 +82,9 @@ int main(int argc, char** argv) {
     int enable = 1;
     int one = 1;
     int fs = 0;
+    int send_http_header = 0;
     char* banner = 0;
-
+    char* header = "HTTP/1.1 200\r\n\r\n";
     // Parse arguments.
     if (argc < 2) {
         perror("Syntax: pong <port>\n");
@@ -184,7 +185,10 @@ int main(int argc, char** argv) {
             // Just read maximum BUF_SIZE from client.
             recv(c, buffer, BUF_SIZE, 0);
 
-            // First send the banner.
+            // First send a valid http response header.
+            send(c, header, fs, 0);
+
+            // Then send the banner.
             send(c, banner, fs, 0);
 
             // Finally send a random quote to the client.
