@@ -83,8 +83,8 @@ int main(int argc, char** argv) {
     int one = 1;
     int fs = 0;
     char* banner = 0;
-    char* header = "HTTP/1.1 200\r\n\r\n";
-    int header_len = strlen(header);
+    int banner_len = 0;
+    char header[128];
 
     // Parse arguments.
     if (argc < 2) {
@@ -162,6 +162,7 @@ int main(int argc, char** argv) {
         banner = malloc(fs + 1);
         fread(banner, fs, 1, fin);
         fclose(fin);
+        banner_len = strlen(banner);
     }
 
     printf("===========================================\n");
@@ -186,6 +187,10 @@ int main(int argc, char** argv) {
             // Just read maximum BUF_SIZE from client.
             recv(c, buffer, BUF_SIZE, 0);
 
+            r = rand() % (stack.count - 1);
+
+            int header_len = sprintf(header, "HTTP/1.1 200\r\nContent-Type: text/plain\r\nContent-Length: %lu\r\n\r\n", 1 + banner_len + strlen(stack.lines[r]));
+
             // First send a valid http response header.
             send(c, header, header_len, 0);
 
@@ -193,8 +198,7 @@ int main(int argc, char** argv) {
             send(c, banner, fs, 0);
 
             // Finally send a random quote to the client.
-            r = rand() % (stack.count - 1);
-            fprintf(fd, "I have a question for you: %s?\n", stack.lines[r]);
+            fprintf(fd, "%s\n", stack.lines[r]);
             fflush(fd);
             fclose(fd);
 
