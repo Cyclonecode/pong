@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
 
             r = rand() % (stack.count - 1);
 
-            int header_len = sprintf(header, "HTTP/1.1 200\r\nContent-Type: text/plain\r\nContent-Length: %lu\r\n\r\n", 1 + banner_len + strlen(stack.lines[r]));
+            int header_len = sprintf(header, "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %lu\r\n\r\n", 1 + banner_len + strlen(stack.lines[r]));
 
             // First send a valid http response header.
             send(c, header, header_len, 0);
