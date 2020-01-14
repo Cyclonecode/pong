@@ -5,10 +5,8 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <netinet/in.h>
-
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
 #include <string.h>
 #include <time.h>
 #include <signal.h>
@@ -70,6 +68,7 @@ int main(int argc, char** argv) {
     int c, s, port, r;
     FILE* fp;
     FILE* fd;
+    FILE* fbanner;
     int error;
     time_t date;
     struct tm* tm_info;
@@ -85,13 +84,45 @@ int main(int argc, char** argv) {
     char* banner = 0;
     int banner_len = 0;
     char header[128];
+    int opt;
+    char* banner_file = "./banner";
 
     // Parse arguments.
     if (argc < 2) {
         perror("Syntax: pong <port>\n");
         exit(1);
     }
-    port = atoi(argv[1]);
+
+    while ((opt = getopt(argc, argv, "b:")) != -1) {
+        switch (opt) {
+          case 'b':
+            fbanner = fopen(optarg, "r");
+            if (!fbanner) {
+              printf("Failed to open banner file, trying to use default.\n");
+            } else {
+                banner_file = optarg;
+                fclose(fbanner);
+            }
+          break;
+        }
+    }
+    // Assume last argument is port.
+    port = atoi(argv[optind]);
+
+    // Check if we should set default banner.
+    if (!banner) {
+        // Read in our banner.
+        fbanner = fopen(banner_file, "r");
+        if (fbanner) {
+            fseek(fbanner, 0, SEEK_END);
+            fs = ftell(fbanner);
+            fseek(fbanner, 0, SEEK_SET);
+            banner = malloc(fs + 1);
+            fread(banner, fs, 1, fbanner);
+            fclose(fbanner);
+            banner_len = strlen(banner);
+        }
+    }
 
     // Load quotes.
     if ((fp = fopen("./quotes.txt", "r")) == 0) {
@@ -152,18 +183,6 @@ int main(int argc, char** argv) {
 
     // Randomize.
     srand(0);
-
-    // Read in our banner.
-    FILE* fin = fopen("./banner", "r");
-    if (fin) {
-        fseek(fin, 0, SEEK_END);
-        fs = ftell(fin);
-        fseek(fin, 0, SEEK_SET);
-        banner = malloc(fs + 1);
-        fread(banner, fs, 1, fin);
-        fclose(fin);
-        banner_len = strlen(banner);
-    }
 
     printf("===========================================\n");
     printf("Start waiting for clients\n");

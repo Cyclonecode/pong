@@ -25,6 +25,10 @@ You could also go to http://127.0.0.1:3000 directly in your browser.
 
 Notice that the program assumes that there is a `banner` and `quotes.txt` file, the contents of these files is not really important; each line in `quotes.txt` becomes a random response from the server, while the contents of the `banner` is sent as it is.
 
+You may also use the `-b` switch to specify a different banner file:
+
+    ./pong -b mybanner.txt 8080
+
 ## Example output
 
 <pre style="font-family:monospace;">
