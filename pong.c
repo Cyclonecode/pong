@@ -14,6 +14,7 @@
 
 #define BUF_SIZE 1024
 #define LINE_SIZE 1024
+#define __USE_BLOCKING__ 1
 
 struct stack_t {
     char** lines;
@@ -157,11 +158,13 @@ int main(int argc, char** argv) {
         exit(error);
     }
     // Set non-blocking mode for socket.
+    #ifdef __USE_BLOCKING__
     if (ioctl(s, FIONBIO, (char *)&one) < 0) {
         error = errno;
         perror("Failed to set socket in non-blocking mode");
         exit(error);
     }
+    #endif
     // Setup address.
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = INADDR_ANY;
@@ -204,7 +207,11 @@ int main(int argc, char** argv) {
             printf("%s - %s\n", buffer, inet_ntoa(client_addr.sin_addr));
 
             // Just read maximum BUF_SIZE from client.
-            recv(c, buffer, BUF_SIZE, 0);
+            int read = 0;
+            do {
+                read = recv(c, buffer, BUF_SIZE, 0);
+                printf("read %d bytes from client\n", read);
+            } while (read > 0);
 
             r = rand() % (stack.count - 1);
 
