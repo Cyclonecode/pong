@@ -190,9 +190,10 @@ int main(int argc, char** argv) {
 
     while (running) {
         c = accept(s, (struct sockaddr*)&client_addr, &addr_len);
-        // Set client in non-blocking mode.
-        fcntl(c, F_SETFL, O_NONBLOCK);
         if (c > 0) {
+            // Set client in non-blocking mode.
+            fcntl(c, F_SETFL, O_NONBLOCK);
+
             fd = fdopen(c, "r+");
             time(&date);
             tm_info = localtime(&date);
@@ -218,7 +219,7 @@ int main(int argc, char** argv) {
             // Then send the banner.
             send(c, banner, fs, 0);
 
-            // Finally send a random quote to the client.
+            // Finally send a random quotfe to the client.
             fprintf(fd, "%s\n", stack.lines[r]);
             fflush(fd);
             fclose(fd);
