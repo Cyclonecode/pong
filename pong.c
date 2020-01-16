@@ -10,11 +10,10 @@
 #include <string.h>
 #include <time.h>
 #include <signal.h>
-#include <sys/ioctl.h>
+#include <fcntl.h>
 
 #define BUF_SIZE 1024
 #define LINE_SIZE 1024
-#define __USE_BLOCKING__ 1
 
 struct stack_t {
     char** lines;
@@ -84,6 +83,7 @@ int main(int argc, char** argv) {
     int fs = 0;
     char* banner = 0;
     int banner_len = 0;
+    ssize_t read = 0;
     char header[128];
     int opt;
     char* banner_file = "./banner";
@@ -158,13 +158,8 @@ int main(int argc, char** argv) {
         exit(error);
     }
     // Set non-blocking mode for socket.
-    #ifdef __USE_BLOCKING__
-    if (ioctl(s, FIONBIO, (char *)&one) < 0) {
-        error = errno;
-        perror("Failed to set socket in non-blocking mode");
-        exit(error);
-    }
-    #endif
+    fcntl(s, F_SETFL, fcntl(s, F_GETFL, 0) | O_NONBLOCK);
+
     // Setup address.
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = INADDR_ANY;
@@ -195,6 +190,8 @@ int main(int argc, char** argv) {
 
     while (running) {
         c = accept(s, (struct sockaddr*)&client_addr, &addr_len);
+        // Set client in non-blocking mode.
+        fcntl(c, F_SETFL, O_NONBLOCK);
         if (c > 0) {
             fd = fdopen(c, "r+");
             time(&date);
@@ -206,11 +203,9 @@ int main(int argc, char** argv) {
 
             printf("%s - %s\n", buffer, inet_ntoa(client_addr.sin_addr));
 
-            // Just read maximum BUF_SIZE from client.
-            int read = 0;
+            // Read all initial data from client.
             do {
                 read = recv(c, buffer, BUF_SIZE, 0);
-                printf("read %d bytes from client\n", read);
             } while (read > 0);
 
             r = rand() % (stack.count - 1);
