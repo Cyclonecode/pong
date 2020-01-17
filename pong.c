@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
+#include <sys/types.h>
 #include <arpa/inet.h>
 #include <string.h>
 #include <time.h>
@@ -21,6 +19,8 @@ struct stack_t {
 };
 // @todo insert non-volatile variable
 static volatile int running = 1;
+
+static uid_t ruid, euid;
 
 void dump(struct stack_t* stack) {
     for (int i = 0; i < stack->count; i++) {
@@ -40,12 +40,24 @@ void free_stack(struct stack_t* stack) {
 
 void dolog(char* fmt, ...) {
     va_list ap;
+    if (ruid == 0) {
+      // Running as root.
+      int uid = atoi(getenv("SUDO_UID"));
+      printf("%d\n", uid);
+      seteuid(uid);
+      setuid(uid);
+    }
     FILE* fin = fopen("log.txt", "a");
     if (fin) {
         va_start(ap, fmt);
         vfprintf(fin, fmt, ap);
         va_end(ap);
         fclose(fin);
+    }
+    if (ruid == 0) {
+        // Switch back to root.
+        seteuid(euid);
+        setruid(ruid);
     }
 }
 
@@ -93,6 +105,10 @@ int main(int argc, char** argv) {
         perror("Syntax: pong <port>\n");
         exit(1);
     }
+
+    // Get uid and euid.
+    ruid = getuid();
+    euid = geteuid();
 
     while ((opt = getopt(argc, argv, "b:")) != -1) {
         switch (opt) {
