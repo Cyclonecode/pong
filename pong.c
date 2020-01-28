@@ -12,6 +12,8 @@
 
 #define BUF_SIZE 1024
 #define LINE_SIZE 1024
+#define DEFAULT_PORT 8080
+#define LOG_FORMAT "%Y-%m-%d %H:%M:%S"
 
 struct stack_t {
     char** lines;
@@ -43,7 +45,6 @@ void dolog(char* fmt, ...) {
     if (ruid == 0) {
       // Running as root.
       int uid = atoi(getenv("SUDO_UID"));
-      printf("%d\n", uid);
       seteuid(uid);
       setuid(uid);
     }
@@ -57,7 +58,7 @@ void dolog(char* fmt, ...) {
     if (ruid == 0) {
         // Switch back to root.
         seteuid(euid);
-        setruid(ruid);
+        setuid(ruid);
     }
 }
 
@@ -92,7 +93,6 @@ int main(int argc, char** argv) {
     socklen_t addr_len;
     int enable = 1;
     int one = 1;
-    int fs = 0;
     char* banner = 0;
     int banner_len = 0;
     ssize_t read = 0;
@@ -125,6 +125,10 @@ int main(int argc, char** argv) {
     }
     // Assume last argument is port.
     port = atoi(argv[optind]);
+    if (port < 1 || port > 65535) {
+        perror("Invalid port, specify a port between 1 and 65535.\n");
+        exit(1);
+    }
 
     // Check if we should set default banner.
     if (!banner) {
@@ -132,12 +136,11 @@ int main(int argc, char** argv) {
         fbanner = fopen(banner_file, "r");
         if (fbanner) {
             fseek(fbanner, 0, SEEK_END);
-            fs = ftell(fbanner);
+            banner_len = ftell(fbanner);
             fseek(fbanner, 0, SEEK_SET);
-            banner = malloc(fs + 1);
-            fread(banner, fs, 1, fbanner);
+            banner = malloc(banner_len + 1);
+            fread(banner, banner_len, 1, fbanner);
             fclose(fbanner);
-            banner_len = strlen(banner);
         }
     }
 
@@ -204,6 +207,8 @@ int main(int argc, char** argv) {
 
     signal(SIGINT, sigHandler);
 
+    // Ignore SIGPIPE trigged when sending data to an already closed socket.
+    signal(SIGPIPE, SIG_IGN);
     while (running) {
         c = accept(s, (struct sockaddr*)&client_addr, &addr_len);
         if (c > 0) {
@@ -213,7 +218,7 @@ int main(int argc, char** argv) {
             fd = fdopen(c, "r+");
             time(&date);
             tm_info = localtime(&date);
-            strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
+            strftime(buffer, 26, LOG_FORMAT, tm_info);
 
             // Log client connection.
             dolog("%s - %s\n", buffer, inet_ntoa(client_addr.sin_addr));
@@ -233,9 +238,9 @@ int main(int argc, char** argv) {
             send(c, header, header_len, 0);
 
             // Then send the banner.
-            send(c, banner, fs, 0);
+            send(c, banner, banner_len, 0);
 
-            // Finally send a random quotfe to the client.
+            // Finally send a random quote to the client.
             fprintf(fd, "%s\n", stack.lines[r]);
             fflush(fd);
             fclose(fd);
