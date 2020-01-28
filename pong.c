@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <arpa/inet.h>
 #include <string.h>
 #include <time.h>
@@ -12,7 +11,6 @@
 
 #define BUF_SIZE 1024
 #define LINE_SIZE 1024
-#define DEFAULT_PORT 8080
 #define LOG_FORMAT "%Y-%m-%d %H:%M:%S"
 
 struct stack_t {
