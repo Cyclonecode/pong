@@ -27,7 +27,13 @@ Notice that the program assumes that there is a `banner` and `quotes.txt` file, 
 
 You may also use the `-b` switch to specify a different banner file:
 
-    ./pong -b mybanner.txt 8080
+## Syntax
+
+    b <banner>  Specify a custom banner file.
+    q <banner>  Specify a custom quotes file.
+    x           Do not send any banner.
+    v           Verbose logging. Entire request will be logged.
+    s <name>    Set name of server. Sent in 'Server' header in response.
 
 ## Example output
 
