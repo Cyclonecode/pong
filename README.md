@@ -11,6 +11,10 @@ You can also use make to compile:
 
     make
 
+## Demo
+
+A demo can (some times) be found at http://cyclonecode.tk:3000
+
 ## Running
 
 Depending on which port you are using you might need to run the program with sudo privileges.
