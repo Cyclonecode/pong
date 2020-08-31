@@ -101,9 +101,12 @@ int main(int argc, char **argv) {
     ssize_t header_len = 0;
     ssize_t verbose = 0;
     ssize_t pos = 0;
-    char path[256];
     char header[256];
     int opt;
+    struct timeval tv = {
+        1,
+        0,
+    };
     char *start, end;
     char *banner_file = DEFAULT_BANNER_FILE;
     char *quotes_file = DEFAULT_QUOTES_FILE;
@@ -241,7 +244,11 @@ int main(int argc, char **argv) {
         if (c > 0) {
             // TODO: Use select instead to see when something is happening on the socket.
             // Set client in non-blocking mode.
-            fcntl(c, F_SETFL, O_NONBLOCK);
+            // fcntl(c, F_SETFL, O_NONBLOCK);
+
+            // Set timeout for blocking calls.
+            setsockopt(c, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+
             time(&date);
             tm_info = localtime(&date);
             strftime(logBuffer, 26, LOG_FORMAT, tm_info);
@@ -274,9 +281,6 @@ int main(int argc, char **argv) {
             // Method SP Request-URI SP HTTP-Version CRLF
             char *start = strchr(buffer, ' ') + 1;
             char *end = strchr(start, ' ');
-
-            // TODO: could split on ' ' and the 1 value is the path?
-            strncpy(path, start, end - start);
 
             // Check so we don't have any path
             if (end - start > 1) {
