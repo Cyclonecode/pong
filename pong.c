@@ -294,7 +294,8 @@ int main(int argc, char **argv) {
 
             r = rand() % (stack.count - 1);
 
-            header_len = sprintf(header,
+            header_len = snprintf(header,
+                                 sizeof(header),
                                  "HTTP/1.1 200 OK\nServer: %s\nContent-Type: text/plain\nContent-Length: %lu\n\n",
                                  serverName, banner_len + strlen(stack.lines[r]));
 
