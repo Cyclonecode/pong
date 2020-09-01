@@ -32,7 +32,7 @@ void dump(struct stack_t *stack) {
     }
 }
 
-void free_stack(struct stack_t *stack) {
+void freeStack(struct stack_t *stack) {
     if (stack) {
         // Cleanup stack.
         for (int i = 0; i < stack->count; i++) {
@@ -42,7 +42,7 @@ void free_stack(struct stack_t *stack) {
     }
 }
 
-void dolog(char *fmt, ...) {
+void doLog(char *fmt, ...) {
     va_list ap;
     if (ruid == 0) {
         // Running as root.
@@ -62,6 +62,27 @@ void dolog(char *fmt, ...) {
         seteuid(euid);
         setuid(ruid);
     }
+}
+
+int isWhiteListed(struct in_addr in, struct stack_t whitelist) {
+    if (whitelist.count) {
+        char* ip = inet_ntoa(in);
+        for (int i = 0; i < whitelist.count; i++) {
+            if (strncmp(ip, whitelist.lines[i], strlen(ip)) == 0) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+    return 1;
+}
+
+void closeSocket(int s) {
+    char buffer[BUF_SIZE];
+    shutdown(s, SHUT_WR);
+    while (recv(s, buffer, BUF_SIZE, 0) || errno == EAGAIN || errno == EWOULDBLOCK);
+    close(s);
+    usleep(250);
 }
 
 void sigHandler(int sig) {
@@ -92,6 +113,10 @@ int main(int argc, char **argv) {
     char line[LINE_SIZE] = {0};
     struct sockaddr_in saddr, client_addr;
     struct stack_t stack;
+    struct stack_t whitelist = {
+        0,
+        0,
+    };
     socklen_t addr_len;
     int enable = 1;
     int one = 1;
@@ -122,7 +147,7 @@ int main(int argc, char **argv) {
     ruid = getuid();
     euid = geteuid();
 
-    while ((opt = getopt(argc, argv, "b:s:vx")) != -1) {
+    while ((opt = getopt(argc, argv, "w:b:s:vx")) != -1) {
         switch (opt) {
             case 's':
                 serverName = optarg;
@@ -139,6 +164,20 @@ int main(int argc, char **argv) {
                     fclose(fp);
                 }
                 break;
+            case 'w':
+            {
+                char *ptr = strtok(optarg, ",");
+                if (ptr) {
+                    while (ptr) {
+                        whitelist.lines = realloc(whitelist.lines, sizeof(char *) * (whitelist.count + 1));
+                        whitelist.lines[whitelist.count] = malloc(strlen(ptr) + 1);
+                        strncpy(whitelist.lines[whitelist.count], ptr, strlen(ptr));
+                        whitelist.lines[whitelist.count][strlen(ptr)] = 0;
+                        whitelist.count++;
+                        ptr = strtok(NULL, ",");
+                    }
+                }
+            } break;
             case 'b':
                 fbanner = fopen(optarg, "r");
                 if (!fbanner) {
@@ -242,6 +281,16 @@ int main(int argc, char **argv) {
     while (running) {
         c = accept(s, (struct sockaddr *) &client_addr, &addr_len);
         if (c > 0) {
+            if (!isWhiteListed(client_addr.sin_addr, whitelist)) {
+                printf("Client %s is not allowed to connect.\n", inet_ntoa(client_addr.sin_addr));
+                if (verbose) {
+                  doLog("Client %s is not allowed to connect.\n", inet_ntoa(client_addr.sin_addr));
+                }
+                header_len = snprintf(header, sizeof(header), "HTTP/1.1 401 Unauthorized\nServer: %s\n\n", serverName);
+                send(c, header, header_len, 0);
+                closeSocket(c);
+                continue;
+            }
             // TODO: Use select instead to see when something is happening on the socket.
             // Set client in non-blocking mode.
             // fcntl(c, F_SETFL, O_NONBLOCK);
@@ -254,7 +303,7 @@ int main(int argc, char **argv) {
             strftime(logBuffer, 26, LOG_FORMAT, tm_info);
 
             // Log client connection.
-            dolog("%s - %s\n\n", logBuffer, inet_ntoa(client_addr.sin_addr));
+            doLog("%s - %s\n\n", logBuffer, inet_ntoa(client_addr.sin_addr));
             printf("%s - %s\n", logBuffer, inet_ntoa(client_addr.sin_addr));
 
             // Read all initial data from client.
@@ -275,7 +324,7 @@ int main(int argc, char **argv) {
 
             // Log request headers and body in verbose mode.
             if (verbose) {
-                dolog("%s\n", buffer);
+                doLog("%s\n", buffer);
             }
 
             // Method SP Request-URI SP HTTP-Version CRLF
@@ -297,7 +346,8 @@ int main(int argc, char **argv) {
             header_len = snprintf(header,
                                  sizeof(header),
                                  "HTTP/1.1 200 OK\nServer: %s\nContent-Type: text/plain\nContent-Length: %lu\n\n",
-                                 serverName, banner_len + strlen(stack.lines[r]));
+                                 serverName,
+                                 banner_len + strlen(stack.lines[r]));
 
             // First send a valid http response header.
             send(c, header, header_len, 0);
@@ -314,9 +364,9 @@ int main(int argc, char **argv) {
         usleep(250);
     }
 
-    printf("cleaning up\n");
     close(s);
-    free_stack(&stack);
+    freeStack(&stack);
+    freeStack(&whitelist);
     free(banner);
     exit(0);
 

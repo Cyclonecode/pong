@@ -32,6 +32,7 @@ You may also use the `-b` switch to specify a different banner file:
     b <banner>  Specify a custom banner file.
     q <banner>  Specify a custom quotes file.
     x           Do not send any banner.
+    w <ip,...>  List of whitelisted ip addresses to allow.
     v           Verbose logging. Entire request will be logged.
     s <name>    Set name of server. Sent in 'Server' header in response.
 
