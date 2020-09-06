@@ -13,7 +13,7 @@ You can also use make to compile:
 
 ## Demo
 
-A demo can (some times) be found at http://cyclonecode.tk:3000
+A demo can (some times) be found at http://cyclonecode.tk:8000/
 
 ## Running
 
