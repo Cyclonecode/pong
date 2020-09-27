@@ -80,7 +80,7 @@ int isWhiteListed(struct in_addr in, struct stack_t whitelist) {
 void closeSocket(int s) {
     char buffer[BUF_SIZE];
     shutdown(s, SHUT_WR);
-    while (recv(s, buffer, BUF_SIZE, 0) || errno == EAGAIN || errno == EWOULDBLOCK);
+    while (recv(s, buffer, BUF_SIZE, 0) > 0 || errno == EAGAIN || errno == EWOULDBLOCK);
     close(s);
     usleep(250);
 }
@@ -359,7 +359,7 @@ int main(int argc, char **argv) {
             send(c, stack.lines[r], strlen(stack.lines[r]), 0);
 
             // Close client socket.
-            close(c);
+            closeSocket(c);
         }
         usleep(250);
     }
