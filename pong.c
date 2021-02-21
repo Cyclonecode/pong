@@ -150,13 +150,14 @@ int main(int argc, char **argv) {
     ruid = getuid();
     euid = geteuid();
 
-    while ((opt = getopt(argc, argv, "w:(whitelist)q:(quotes)b:(banner)s:(server)vx")) != -1) {
+    while ((opt = getopt(argc, argv, "w:q:b:s:vx")) != -1) {
         switch (opt) {
             case '?':
                help();
                exit(2);
                break;
             case 's':
+            printf("%s\n", optarg);
                 serverName = optarg;
                 break;
             case 'x':
