@@ -80,9 +80,8 @@ int isWhiteListed(struct in_addr in, struct stack_t whitelist) {
 void closeSocket(int s) {
     char buffer[BUF_SIZE];
     shutdown(s, SHUT_WR);
-    while (recv(s, buffer, BUF_SIZE, 0) > 0 || errno == EAGAIN || errno == EWOULDBLOCK);
+    while (recv(s, buffer, BUF_SIZE, 0) > 0);
     close(s);
-    usleep(250);
 }
 
 void sigHandler(int sig) {
@@ -98,6 +97,10 @@ void sigHandler(int sig) {
         signal(SIGINT, sigHandler);
     }
     getchar(); // Get new line character
+}
+
+void help() {
+  printf("Syntax:\npong [-s name] [-q file] [-b file] [-w ip,...] [-xv] port\n");
 }
 
 int main(int argc, char **argv) {
@@ -139,7 +142,7 @@ int main(int argc, char **argv) {
 
     // Parse arguments.
     if (argc < 2) {
-        perror("Syntax: pong <port>\n");
+        help();
         exit(1);
     }
 
@@ -147,8 +150,12 @@ int main(int argc, char **argv) {
     ruid = getuid();
     euid = geteuid();
 
-    while ((opt = getopt(argc, argv, "w:b:s:vx")) != -1) {
+    while ((opt = getopt(argc, argv, "w:(whitelist)q:(quotes)b:(banner)s:(server)vx")) != -1) {
         switch (opt) {
+            case '?':
+               help();
+               exit(2);
+               break;
             case 's':
                 serverName = optarg;
                 break;
