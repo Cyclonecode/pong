@@ -15,6 +15,11 @@ You can also use make to compile:
 
 A demo can (some times) be found at https://cyclonecode.tk:8000/
 
+### Adding quotes for the demo
+
+You can add your own quote which will be displayed at the end of the response at https://cyclonecode.tk:8000/ by going to
+https://cyclonecode.tk/quote.php and add something interesting =)
+
 ## Running
 
 Depending on which port you are using you might need to run the program with sudo privileges.
